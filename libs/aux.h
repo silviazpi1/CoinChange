@@ -1,31 +1,32 @@
 #define ANSI_COLOR_MAGENTA "\x1b[35m"
 #define ANSI_COLOR_RESET "\x1b[0m"
+#include <stdbool.h>
 
-void swap(int *a, int *b)
+void swap(float *a, float *b)
 {
-    int temp = *a;
+    float temp = *a;
     *a = *b;
     *b = temp;
 }
 
-int QuickSort(int *lista, int izda, int dcha)
+int QuickSort(float *list, int left, int right)
 {
-    int pivot = izda, aux;
+    int pivot = left, aux;
 
-    if (izda < dcha)
+    if (left < right)
     {
-        for (int i = izda + 1; i <= dcha; i++)
+        for (int i = left + 1; i <= right; i++)
         {
-            if (lista[i] < lista[izda])
+            if (list[i] < list[left])
             {
                 pivot += 1;
-                swap(&lista[i], &lista[pivot]);
+                swap(&list[i], &list[pivot]);
             }
         }
 
-        swap(&lista[izda], &lista[pivot]);
+        swap(&list[left], &list[pivot]);
 
-        QuickSort(lista, izda, pivot - 1);
-        QuickSort(lista, pivot + 1, dcha);
+        QuickSort(list, left, pivot - 1);
+        QuickSort(list, pivot + 1, right);
     }
 }
