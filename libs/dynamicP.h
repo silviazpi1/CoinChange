@@ -1,7 +1,8 @@
 #include "aux.h"
 #include <stdio.h>
 
-void calculateNumberCoins(int change, int num_coins, float *coin_types, bool *permutations, int *coins)
+// Function that generates the tables for Dynamic Programming
+void calculateNumberCoins(int change, int num_coins, int *coin_types, bool *permutations, int *coins)
 {
     // Initialize first row of the matrices to false and zero
     for (int i = 0; i < num_coins; i++)
@@ -19,14 +20,27 @@ void calculateNumberCoins(int change, int num_coins, float *coin_types, bool *pe
                 *((coins + i * change) + j) = 0; //MAX(CARDINAL) ??????
                 *((permutations + i * change) + j) = false;
             }
+            else if (i == 1)
+            {
+                *((coins + i * change) + j) = 1 + *((coins + i * change) + (j - coin_types[0]));
+                *((permutations + i * change) + j) = true;
+            }
+            else if (j < coin_types[i])
+            {
+                *((coins + i * change) + j) = *((coins + (i - 1) * change) + j);
+                *((permutations + i * change) + j) = false;
+            }
             else
             {
+                *((coins + i * change) + j) = min(*((coins + (i - 1) * change) + j), 1 + *((coins + i * change) + (j - coin_types[i])));
+                *((permutations + i * change) + j) = (*((coins + i * change) + j) != *((coins + (i - 1) * change) + j));
             }
         }
     }
 }
 
-void calculateCoins(int change, int num_coins, float *coin_types, bool *permutations, int *coins, int *solution)
+// Function that given the tables of Dynamic Programming finds the most efficient way to give change back
+void calculateCoins(int change, int num_coins, int *coin_types, bool *permutations, int *coins, int *solution)
 {
     int i = num_coins, j = change, index;
 

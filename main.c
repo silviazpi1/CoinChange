@@ -14,12 +14,12 @@ int main(int argc, char *argv[])
     // Create the vector with the different existing coins
     printf("\nIntroduce the number of different existing coins: ");
     scanf("%d", &num_coins);
-    float coin_types[num_coins];
+    int coin_types[num_coins];
 
     // Fill the vector with the values of the existing coins
     printf("\nIntroduce one by one the values of the different existing coins:\n");
     for (int i = 0; i < num_coins; i++)
-        scanf("%f", &coin_types[i]);
+        scanf("%d", &coin_types[i]);
 
     // Sort the vector
     QuickSort(coin_types, 0, num_coins - 1);
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         // Give change back
         printf("\nThe most efficient way to give back %d is:\n", change);
         for (int i = 0; i < num_coins; i++)
-            printf("%d coins of %f\n", solution[i], coin_types[i]);
+            printf("%d coins of %d\n", solution[i], coin_types[i]);
         printf("\n");
     }
 

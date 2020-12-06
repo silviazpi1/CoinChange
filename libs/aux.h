@@ -2,14 +2,21 @@
 #define ANSI_COLOR_RESET "\x1b[0m"
 #include <stdbool.h>
 
-void swap(float *a, float *b)
+int min(int a, int b){
+    if(a>b)
+        return a;
+    else
+        return b;    
+}
+
+void swap(int *a, int *b)
 {
-    float temp = *a;
+    int temp = *a;
     *a = *b;
     *b = temp;
 }
 
-int QuickSort(float *list, int left, int right)
+int QuickSort(int *list, int left, int right)
 {
     int pivot = left, aux;
 
