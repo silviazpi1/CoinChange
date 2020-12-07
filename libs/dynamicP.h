@@ -11,16 +11,18 @@ void calculateNumberCoins(int change, int num_coins, int *coin_types, bool *perm
         *((coins + i * change) + 0) = 0;
     }
 
+    change += 1;
+
     for (int i = 0; i < num_coins; i++)
     {
         for (int j = 0; j < change; j++)
         {
             if (i == 0 && j < coin_types[i])
             {
-                *((coins + i * change) + j) = 0; //MAX(CARDINAL) ??????
+                *((coins + i * change) + j) = 0;
                 *((permutations + i * change) + j) = false;
             }
-            else if (i == 1)
+            else if (i == 0)
             {
                 *((coins + i * change) + j) = 1 + *((coins + i * change) + (j - coin_types[0]));
                 *((permutations + i * change) + j) = true;
@@ -36,6 +38,13 @@ void calculateNumberCoins(int change, int num_coins, int *coin_types, bool *perm
                 *((permutations + i * change) + j) = (*((coins + i * change) + j) != *((coins + (i - 1) * change) + j));
             }
         }
+    }
+     
+    for (int i = 0; i < num_coins; i++)
+    {
+        for (int j = 0; j < change; j++)
+        printf("%d, ", *((coins + i * change) + j));
+        printf("\n");
     }
 }
 

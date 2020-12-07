@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
     else // Otherwise
     {
         // Generate the tables (Dynamic Programming)
-        int coins[num_coins][change];
-        bool permutations[num_coins][change];
+        int coins[num_coins][change+1];
+        bool permutations[num_coins][change+1];
         calculateNumberCoins(change, num_coins, coin_types, (bool *)permutations, (int *)coins);
 
         // Calculate the coins to give back (using the generated tables)
