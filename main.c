@@ -31,11 +31,11 @@ int main(int argc, char *argv[])
         // Generate the tables (Dynamic Programming)
         int coins[num_coins][change+1];
         bool permutations[num_coins][change+1];
-        calculateNumberCoins(change, num_coins, coin_types, (bool *)permutations, (int *)coins);
+        calculateNumberCoins(change+1, num_coins, coin_types, (bool *)permutations, (int *)coins);
 
         // Calculate the coins to give back (using the generated tables)
         int solution[num_coins];
-        calculateCoins(change, num_coins, coin_types, (bool *)permutations, (int *)coins, solution);
+        calculateCoins(change+1, num_coins, coin_types, (bool *)permutations, (int *)coins, solution);
 
         // Give change back
         printf("\nThe most efficient way to give back %d is:\n", change);

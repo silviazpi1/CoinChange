@@ -11,8 +11,6 @@ void calculateNumberCoins(int change, int num_coins, int *coin_types, bool *perm
         *((coins + i * change) + 0) = 0;
     }
 
-    change += 1;
-
     for (int i = 0; i < num_coins; i++)
     {
         for (int j = 0; j < change; j++)
@@ -39,19 +37,12 @@ void calculateNumberCoins(int change, int num_coins, int *coin_types, bool *perm
             }
         }
     }
-     
-    for (int i = 0; i < num_coins; i++)
-    {
-        for (int j = 0; j < change; j++)
-        printf("%d, ", *((coins + i * change) + j));
-        printf("\n");
-    }
 }
 
 // Function that given the tables of Dynamic Programming finds the most efficient way to give change back
 void calculateCoins(int change, int num_coins, int *coin_types, bool *permutations, int *coins, int *solution)
 {
-    int i = num_coins, j = change, index;
+    int i = num_coins, j = change-1, index;
 
     // Initialize solution vector to zero
     for (index = 0; index < num_coins; index++)
