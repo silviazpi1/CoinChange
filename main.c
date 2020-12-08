@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
     else // Otherwise
     {
         // Generate the tables (Dynamic Programming)
+        // Matrices are created and one more space is added to create the tables from 0...L (both included)
         int coins[num_coins][change+1];
         bool permutations[num_coins][change+1];
         calculateNumberCoins(change+1, num_coins, coin_types, (bool *)permutations, (int *)coins);
