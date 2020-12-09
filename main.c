@@ -1,36 +1,51 @@
-#include "libs/pdinamica.h"
+#include "libs/dynamicP.h"
 
+int main(int argc, char *argv[])
+{
+    int num_coins, change;
 
-int main(int argc, char *argv[]) {
-    int number_coins, change;
+    printf("\e[1;1H\e[2J"); // Clear console
+    printf(ANSI_COLOR_MAGENTA "DYNAMIC PROGRAMMING: " ANSI_COLOR_RESET "COIN CHANGE\n");
 
-    printf("\e[1;1H\e[2J"); // Limpiar pantalla de la consola
-    printf(ANSI_COLOR_MAGENTA "PROGRAMACION DINAMICA: "ANSI_COLOR_RESET"PROBLEMA DEL CAMBIO\n");
-
-    // Obtener el cambio que se desea devolver
-    printf("\nIntroduzca el cambio a devolver: ");
+    // Get the change to give back
+    printf("\nIntroduce the change to give back: ");
     scanf("%d", &change);
-    
-    // Crear vector de tipos de monedas existentes
-    printf("\nIntroduzca el numero de monedas de diferentes existentes: ");
-    scanf("%d", &number_coins);
-    int coins_vector[number_coins];
-    
-    // Rellenar vector de tipos de monedas existentes
-    printf("\nIntroduzca de uno en uno el valor de las monedas existentes:\n");
-    for(int i = 0; i<number_coins; i++)
-        scanf("%d", &coins_vector[i]);
 
-    // Ordenar el vector recibido
-    QuickSort(coins_vector, 0, number_coins-1);
+    // Create the vector with the different existing coins
+    printf("\nIntroduce the number of different existing coins: ");
+    scanf("%d", &num_coins);
+    int coin_types[num_coins];
 
-    // Generacion de las tablas para la programacion dinamica
-    int coins[number_coins][change];
-    int permutations[number_coins][change];
-    calculoNumeroMonedas();
+    // Fill the vector with the values of the existing coins
+    printf("\nIntroduce one by one the values of the different existing coins:\n");
+    for (int i = 0; i < num_coins; i++)
+        scanf("%d", &coin_types[i]);
 
-    // Calculo del cambio necesario (buscando en las tablas generadas)
-    calculoMonedas();
+    // Sort the vector
+    QuickSort(coin_types, 0, num_coins - 1);
 
-    return 0; 
+    if (coin_types[0] > change) // If the smallest coin is bigger than the change, no change can be given
+        printf("The change cannot be given back, the smallest coin is bigger than the change\n");
+    else // Otherwise
+    {
+        // Generate the tables (Dynamic Programming)
+        // Matrices are created and one more space is added to create the tables from 0...L (both included)
+        int coins[num_coins][change+1];
+        bool permutations[num_coins][change+1];
+        calculateNumberCoins(change+1, num_coins, coin_types, (bool *)permutations, (int *)coins);
+
+        // Calculate the coins to give back (using the generated tables)
+        int solution[num_coins];
+        calculateCoins(change+1, num_coins, coin_types, (bool *)permutations, (int *)coins, solution);
+
+        // Give change back
+        printf("\nThe most efficient way to give back %d is:\n", change);
+        for (int i = 0; i < num_coins; i++)
+            printf("%d coins of %d\n", solution[i], coin_types[i]);
+        printf("\n");
+    }
+
+    printf(ANSI_COLOR_MAGENTA "END OF PROGRAM" ANSI_COLOR_RESET "\n");
+
+    return 0;
 }
